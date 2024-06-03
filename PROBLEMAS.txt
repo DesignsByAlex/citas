@@ -1,0 +1,5 @@
+Hola buenos días Richard, espero este bien.
+
+Tengo un pequeño problema,nose que hacer con el trabajador, donde lo ubico, solo me falta eso.
+
+Si le pide usuario y contraseña es: Administrador - 12345
