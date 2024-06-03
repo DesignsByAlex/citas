@@ -3,8 +3,9 @@
 include("model/conexion.php");
 
 try {
-    // Consulta SQL para obtener las citas de la tabla "Reservas"
-    $sql = "SELECT ID AS id, Nombre AS title, Fecha AS start, Hora AS time FROM Reservas";
+    // Consulta SQL para obtener las citas de la tabla "reservas"
+    // Asegúrate de que los nombres de las columnas sean correctos
+    $sql = "SELECT ID AS id, Nombre AS title, Fecha AS start, Hora AS time FROM reservas";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 
@@ -13,6 +14,7 @@ try {
 } catch (PDOException $e) {
     // Manejo de errores de la base de datos
     echo "Error en la base de datos: " . $e->getMessage();
+    $citas = []; // Asignar un array vacío en caso de error
 }
 
 // Cierra la conexión a la base de datos
@@ -22,6 +24,14 @@ $db = null;
 $citas_json = json_encode($citas);
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js'></script>
+</head>
+<body>
 
     <div id='calendar'></div>
 
@@ -35,7 +45,7 @@ $citas_json = json_encode($citas);
             eventTimeFormat: {
                 hour: 'numeric',
                 minute: '2-digit',
-                meridiem: 'short'
+                meridiem: false
             },
             dayHeaderFormat: {
                 weekday: 'short',
@@ -53,8 +63,10 @@ $citas_json = json_encode($citas);
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             navLinks: true, // Habilitar enlaces en los eventos para navegar
-            editable: false // Permitir arrastrar y soltar eventos para moverlos
+            editable: false // No permitir arrastrar y soltar eventos para moverlos
         });
         calendar.render();
     });
-</script>
+    </script>
+</body>
+</html>
